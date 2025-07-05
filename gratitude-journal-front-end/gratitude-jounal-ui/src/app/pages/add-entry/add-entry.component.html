@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Add Gratitude Entry</h1>
+  
+  <div *ngIf="showSuccess" class="success-message">
+    Entry added successfully! 🌟
+  </div>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="entryContent">What are you grateful for today?</label>
+      <textarea
+        id="entryContent"
+        name="entryContent"
+        [(ngModel)]="entryContent"
+        class="form-control"
+        placeholder="I am grateful for..."
+        required
+        [disabled]="isLoading"
+      ></textarea>
+    </div>
+    
+    <button 
+      type="submit" 
+      class="btn" 
+      [disabled]="isLoading || !entryContent.trim()"
+    >
+      {{ isLoading ? 'Adding...' : 'Add Entry' }}
+    </button>
+  </form>
+  
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" (click)="goBack()">
+      Back to Home
+    </button>
+    <button class="btn btn-secondary" (click)="viewAllEntries()">
+      View All Entries
+    </button>
+  </div>
+</div>

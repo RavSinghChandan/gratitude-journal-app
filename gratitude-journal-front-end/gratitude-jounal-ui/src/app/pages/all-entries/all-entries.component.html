@@ -1,0 +1,45 @@
+<div class="container">
+  <h1>All Gratitude Entries</h1>
+  
+  <div *ngIf="isLoading" class="loading">
+    <p>Loading entries...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn" (click)="loadEntries()">Try Again</button>
+  </div>
+  
+  <div *ngIf="!isLoading && !error && entries.length === 0" class="empty-state">
+    <p>No gratitude entries yet. Start your journey by adding your first entry!</p>
+  </div>
+  
+  <div *ngIf="!isLoading && !error && entries.length > 0" class="entries-list">
+    <div *ngFor="let entry of entries" class="entry-card">
+      <button 
+        class="delete-btn" 
+        (click)="deleteEntry(entry.id)"
+        title="Delete entry"
+      >
+        ×
+      </button>
+      
+      <div class="entry-content">
+        {{ entry.content }}
+      </div>
+      
+      <div class="entry-date">
+        {{ formatDate(entry.createdAt) }}
+      </div>
+    </div>
+  </div>
+  
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" (click)="goBack()">
+      Back to Home
+    </button>
+    <button class="btn" (click)="addNewEntry()">
+      Add New Entry
+    </button>
+  </div>
+</div>

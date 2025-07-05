@@ -1,0 +1,254 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Global CSS Variables */
+:root {
+  --background-color: #F98F63;
+  --button-background: #FBC252;
+  --button-text: #FFFFFF;
+  --heading-text: #333333;
+  --input-field: #F4F4F4;
+  --border-color: #DDDDDD;
+  --success-message: #28A745;
+  --vertical-spacing: 24px;
+  --text-spacing: 16px;
+  --container-width: 90%;
+  --max-container-width: 420px;
+  --button-height: 48px;
+}
+
+/* Global Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--heading-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container Styles */
+.container {
+  width: var(--container-width);
+  max-width: var(--max-container-width);
+  background: white;
+  border-radius: 12px;
+  padding: var(--vertical-spacing);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+/* Typography */
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--heading-text);
+  margin-bottom: var(--text-spacing);
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--heading-text);
+  margin-bottom: var(--text-spacing);
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--heading-text);
+  margin-bottom: var(--text-spacing);
+}
+
+/* Button Styles */
+.btn {
+  background-color: var(--button-background);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  height: var(--button-height);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  width: 100%;
+  margin-bottom: var(--text-spacing);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--heading-text);
+  border: 2px solid var(--border-color);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: var(--text-spacing);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--heading-text);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--input-field);
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--button-background);
+}
+
+.form-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Entry Card Styles */
+.entry-card {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: var(--text-spacing);
+  margin-bottom: var(--text-spacing);
+  position: relative;
+}
+
+.entry-content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.entry-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: var(--text-spacing);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #ff3742;
+}
+
+/* Success Message */
+.success-message {
+  background-color: var(--success-message);
+  color: white;
+  padding: var(--text-spacing);
+  border-radius: 8px;
+  margin-bottom: var(--text-spacing);
+  text-align: center;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #ff4757;
+  color: white;
+  padding: var(--text-spacing);
+  border-radius: 8px;
+  margin-bottom: var(--text-spacing);
+  text-align: center;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: var(--text-spacing);
+  color: #666;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: var(--text-spacing);
+  color: #666;
+  font-style: italic;
+}
+
+/* Emoji Styles */
+.emoji {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: var(--text-spacing);
+}
+
+/* Navigation */
+.nav-buttons {
+  display: flex;
+  gap: var(--text-spacing);
+  margin-top: var(--vertical-spacing);
+}
+
+.nav-buttons .btn {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    padding: 16px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+  }
+}
