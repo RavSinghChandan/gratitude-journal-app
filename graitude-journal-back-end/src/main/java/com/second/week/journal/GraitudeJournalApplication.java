@@ -1,4 +1,4 @@
-package com.second.week.graitude_journal;
+package com.second.week.journal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

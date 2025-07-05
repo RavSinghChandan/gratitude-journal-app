@@ -1,4 +1,4 @@
-package com.second.week.graitude_journal;
+package com.second.week.journal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
