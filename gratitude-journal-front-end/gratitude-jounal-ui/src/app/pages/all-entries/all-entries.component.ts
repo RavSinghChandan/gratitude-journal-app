@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { JournalService, GratitudeEntry } from '../../services/journal.service';
@@ -15,10 +15,8 @@ export class AllEntriesComponent implements OnInit {
   isLoading: boolean = false;
   error: string = '';
 
-  constructor(
-    private router: Router,
-    private journalService: JournalService
-  ) {}
+  private router = inject(Router);
+  private journalService = inject(JournalService);
 
   ngOnInit() {
     this.loadEntries();

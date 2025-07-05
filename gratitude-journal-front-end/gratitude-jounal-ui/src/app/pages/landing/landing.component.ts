@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,13 +9,10 @@ import { Router } from '@angular/router';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent {
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   navigateToAddEntry() {
     this.router.navigate(['/add']);
   }
-
-  navigateToAllEntries() {
-    this.router.navigate(['/entries']);
-  }
+  
 }

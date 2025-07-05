@@ -1,0 +1,222 @@
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'graitude-journal-back-end/**'
+      - '.github/workflows/backend-ci-cd.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'graitude-journal-back-end/**'
+      - '.github/workflows/backend-ci-cd.yml'
+
+env:
+  JAVA_VERSION: '21'
+  MAVEN_VERSION: '3.9.5'
+
+jobs:
+  # Test and Build Job
+  test-and-build:
+    name: Test and Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'maven'
+        cache-dependency-path: graitude-journal-back-end/pom.xml
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Run tests
+      run: |
+        cd graitude-journal-back-end
+        mvn clean test -B
+        
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: graitude-journal-back-end/target/surefire-reports/
+        retention-days: 30
+        
+    - name: Upload test coverage
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-reports
+        path: graitude-journal-back-end/target/site/jacoco/
+        retention-days: 30
+
+  # Build Application
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: test-and-build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'maven'
+        cache-dependency-path: graitude-journal-back-end/pom.xml
+        
+    - name: Build application
+      run: |
+        cd graitude-journal-back-end
+        mvn clean package -B -DskipTests
+        
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: backend-jar
+        path: graitude-journal-back-end/target/*.jar
+        retention-days: 7
+
+  # Security Scan Job
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        
+    - name: Run OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'Gratitude Journal Backend'
+        path: '.'
+        format: 'HTML'
+        out: 'reports'
+        args: >
+          --scan graitude-journal-back-end/
+          --suppression graitude-journal-back-end/owasp-suppressions.xml
+          
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: reports/
+        retention-days: 30
+
+  # Docker Build Job
+  docker-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download JAR artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-jar
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./graitude-journal-back-end
+        file: ./graitude-journal-back-end/Dockerfile
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/gratitude-journal-backend:${{ github.sha }}
+          ${{ secrets.DOCKER_USERNAME }}/gratitude-journal-backend:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  # Deploy to Development
+  deploy-dev:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    needs: [build, security-scan, docker-build]
+    if: github.ref == 'refs/heads/develop'
+    environment: development
+    
+    steps:
+    - name: Download JAR artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-jar
+        
+    - name: Deploy to development environment
+      run: |
+        echo "Deploying backend to development environment..."
+        # Add your deployment commands here
+        # Example: Deploy to AWS ECS, Kubernetes, etc.
+        
+    - name: Health check
+      run: |
+        echo "Performing health check..."
+        # Add health check commands here
+        
+    - name: Notify deployment
+      run: |
+        echo "Backend deployed to development environment"
+
+  # Deploy to Production
+  deploy-prod:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, security-scan, docker-build]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - name: Download JAR artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-jar
+        
+    - name: Deploy to production environment
+      run: |
+        echo "Deploying backend to production environment..."
+        # Add your deployment commands here
+        # Example: Deploy to AWS ECS, Kubernetes, etc.
+        
+    - name: Health check
+      run: |
+        echo "Performing health check..."
+        # Add health check commands here
+        
+    - name: Notify deployment
+      run: |
+        echo "Backend deployed to production environment" 

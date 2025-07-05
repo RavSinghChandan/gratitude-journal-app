@@ -1,10 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for Gratitude Journal UI */
 
 /* Import Inter font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* Global CSS Variables */
+/* CSS Variables for Design System */
 :root {
+  --scale: 1.25; /* Change this to dynamically scale the UI (e.g., 1.5, 1.25, etc.) */
+
   --background-color: #F98F63;
   --button-background: #FBC252;
   --button-text: #FFFFFF;
@@ -12,14 +14,21 @@
   --input-field: #F4F4F4;
   --border-color: #DDDDDD;
   --success-message: #28A745;
-  --vertical-spacing: 24px;
-  --text-spacing: 16px;
-  --container-width: 90%;
-  --max-container-width: 420px;
-  --button-height: 48px;
+
+  --vertical-spacing: calc(24px * var(--scale));
+  --text-spacing: calc(16px * var(--scale));
+  --container-width: 95%;
+  --max-container-width: calc(420px * var(--scale));
+  --button-height: calc(48px * var(--scale));
+
+  --font-size-heading: calc(28px * var(--scale));
+  --font-size-subheading: calc(20px * var(--scale));
+  --font-size-body: calc(16px * var(--scale));
+  --font-size-button: calc(16px * var(--scale));
+  --font-size-small: calc(14px * var(--scale));
+  --font-size-emoji: calc(48px * var(--scale));
 }
 
-/* Global Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -37,20 +46,18 @@ body {
   align-items: center;
 }
 
-/* Container Styles */
 .container {
   width: var(--container-width);
   max-width: var(--max-container-width);
-  background: white;
+  background-color: #fff;
   border-radius: 12px;
   padding: var(--vertical-spacing);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
 
-/* Typography */
 h1 {
-  font-size: 28px;
+  font-size: var(--font-size-heading);
   font-weight: 600;
   color: var(--heading-text);
   margin-bottom: var(--text-spacing);
@@ -58,27 +65,24 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: var(--font-size-subheading);
   font-weight: 400;
-  color: var(--heading-text);
   margin-bottom: var(--text-spacing);
 }
 
 p {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   font-weight: 400;
-  color: var(--heading-text);
   margin-bottom: var(--text-spacing);
 }
 
-/* Button Styles */
 .btn {
   background-color: var(--button-background);
   color: var(--button-text);
   border: none;
   border-radius: 8px;
   height: var(--button-height);
-  font-size: 16px;
+  font-size: var(--font-size-button);
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -105,25 +109,23 @@ p {
   border: 2px solid var(--border-color);
 }
 
-/* Form Styles */
 .form-group {
   margin-bottom: var(--text-spacing);
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: calc(8px * var(--scale));
   font-weight: 500;
   color: var(--heading-text);
 }
 
 .form-control {
   width: 100%;
-  padding: 12px 16px;
+  padding: calc(12px * var(--scale)) calc(16px * var(--scale));
   border: 2px solid var(--border-color);
   border-radius: 8px;
-  font-size: 16px;
-  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size-body);
   background-color: var(--input-field);
   transition: border-color 0.2s ease;
 }
@@ -139,13 +141,12 @@ p {
 }
 
 textarea.form-control {
-  min-height: 120px;
+  min-height: calc(120px * var(--scale));
   resize: vertical;
 }
 
-/* Entry Card Styles */
 .entry-card {
-  background: white;
+  background-color: #fff;
   border: 2px solid var(--border-color);
   border-radius: 8px;
   padding: var(--text-spacing);
@@ -154,27 +155,26 @@ textarea.form-control {
 }
 
 .entry-content {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 8px;
+  font-size: var(--font-size-body);
+  margin-bottom: calc(8px * var(--scale));
 }
 
 .entry-date {
-  font-size: 14px;
+  font-size: var(--font-size-small);
   color: #666;
   margin-bottom: var(--text-spacing);
 }
 
 .delete-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: calc(12px * var(--scale));
+  right: calc(12px * var(--scale));
   background: #ff4757;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 12px;
+  padding: calc(4px * var(--scale)) calc(8px * var(--scale));
+  font-size: calc(12px * var(--scale));
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -183,49 +183,38 @@ textarea.form-control {
   background: #ff3742;
 }
 
-/* Success Message */
+.success-message,
+.error-message,
+.loading,
+.empty-state {
+  font-size: var(--font-size-subheading);
+  text-align: center;
+  padding: var(--text-spacing);
+  border-radius: 8px;
+  margin-bottom: var(--text-spacing);
+}
+
 .success-message {
   background-color: var(--success-message);
   color: white;
-  padding: var(--text-spacing);
-  border-radius: 8px;
-  margin-bottom: var(--text-spacing);
-  text-align: center;
 }
 
-/* Error Message */
 .error-message {
   background-color: #ff4757;
   color: white;
-  padding: var(--text-spacing);
-  border-radius: 8px;
-  margin-bottom: var(--text-spacing);
-  text-align: center;
 }
 
-/* Loading State */
-.loading {
-  text-align: center;
-  padding: var(--text-spacing);
-  color: #666;
-}
-
-/* Empty State */
+.loading,
 .empty-state {
-  text-align: center;
-  padding: var(--text-spacing);
   color: #666;
-  font-style: italic;
 }
 
-/* Emoji Styles */
 .emoji {
-  font-size: 48px;
+  font-size: var(--font-size-emoji);
   text-align: center;
   margin-bottom: var(--text-spacing);
 }
 
-/* Navigation */
 .nav-buttons {
   display: flex;
   gap: var(--text-spacing);
@@ -237,17 +226,21 @@ textarea.form-control {
   margin-bottom: 0;
 }
 
-/* Responsive Design */
 @media (max-width: 480px) {
   .container {
-    width: 95%;
-    padding: 16px;
+    width: 100%;
+    padding: var(--vertical-spacing);
   }
-  
+
   h1 {
-    font-size: 24px;
+    font-size: calc(26px * var(--scale));
   }
-  
+
+  .form-control,
+  .btn {
+    font-size: calc(18px * var(--scale));
+  }
+
   .nav-buttons {
     flex-direction: column;
   }

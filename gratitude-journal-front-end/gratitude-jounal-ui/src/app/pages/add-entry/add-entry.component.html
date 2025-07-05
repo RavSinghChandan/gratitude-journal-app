@@ -1,13 +1,12 @@
 <div class="container">
-  <h1>Add Gratitude Entry</h1>
+  <h1>Gratitude Entry</h1>
   
-  <div *ngIf="showSuccess" class="success-message">
-    Entry added successfully! 🌟
+  <div *ngIf="showSuccess" class="success-message"> Added successfully! 🌟
   </div>
   
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="entryContent">What are you grateful for today?</label>
+      <label for="entryContent">What are you grateful for ?</label>
       <textarea
         id="entryContent"
         name="entryContent"
@@ -24,16 +23,16 @@
       class="btn" 
       [disabled]="isLoading || !entryContent.trim()"
     >
-      {{ isLoading ? 'Adding...' : 'Add Entry' }}
+      {{ isLoading ? 'ADDING...' : 'SUBMIT' }}
     </button>
   </form>
   
   <div class="nav-buttons">
     <button class="btn btn-secondary" (click)="goBack()">
-      Back to Home
+      HOME
     </button>
     <button class="btn btn-secondary" (click)="viewAllEntries()">
-      View All Entries
+    ENTRIES
     </button>
   </div>
 </div>

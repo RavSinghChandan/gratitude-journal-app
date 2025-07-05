@@ -11,7 +11,7 @@
   </div>
   
   <div *ngIf="!isLoading && !error && entries.length === 0" class="empty-state">
-    <p>No gratitude entries yet. Start your journey by adding your first entry!</p>
+    <p>Let's start a journey !</p>
   </div>
   
   <div *ngIf="!isLoading && !error && entries.length > 0" class="entries-list">
@@ -36,10 +36,10 @@
   
   <div class="nav-buttons">
     <button class="btn btn-secondary" (click)="goBack()">
-      Back to Home
+    HOME
     </button>
     <button class="btn" (click)="addNewEntry()">
-      Add New Entry
+      ADD NEW
     </button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,10 +16,8 @@ export class AddEntryComponent {
   isLoading: boolean = false;
   showSuccess: boolean = false;
 
-  constructor(
-    private router: Router,
-    private journalService: JournalService
-  ) {}
+  private router = inject(Router);
+  private journalService = inject(JournalService);
 
   onSubmit() {
     if (!this.entryContent.trim()) {
@@ -28,7 +26,7 @@ export class AddEntryComponent {
 
     this.isLoading = true;
     this.journalService.addEntry(this.entryContent).subscribe({
-      next: (response) => {
+      next: () => {
         this.isLoading = false;
         this.showSuccess = true;
         this.entryContent = '';
