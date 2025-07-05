@@ -46,7 +46,7 @@ Create a **web application** where users can:
 ## 💻 3. Frontend Development
 
 ### 📦 Framework:
-- **React.js** (or Angular, based on your challenge)
+- **Angular** (or Angular, based on your challenge)
 - CSS: TailwindCSS / SCSS / Bootstrap
 
 ### ⚙️ Features:
