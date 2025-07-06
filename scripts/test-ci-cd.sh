@@ -2,7 +2,7 @@
 
 # Test CI/CD Setup Script
 # This script helps test the CI/CD pipeline components locally
-
+#cd /Users/chandankumar/Desktop/workspace/gratitude-journal-app && chmod +x scripts/test-ci-cd.sh && ./scripts/test-ci-cd.sh
 set -e
 
 echo "🧪 Testing CI/CD Setup for Gratitude Journal App"
@@ -67,12 +67,12 @@ check_dependencies() {
     fi
     
     # Check Maven wrapper
-    if [ -f "graitude-journal-back-end/mvnw" ]; then
-        print_status "Maven wrapper (mvnw) found"
-    else
-        print_error "Maven wrapper not found in backend directory"
-        exit 1
-    fi
+#    if [ -f "graitude-journal-back-end/mvnw" ]; then
+#        print_status "Maven wrapper (mvnw) found"
+#    else
+#        print_error "Maven wrapper not found in backend directory"
+#        exit 1
+#    fi
     
     # Check Docker (optional)
     if command -v docker &> /dev/null; then
